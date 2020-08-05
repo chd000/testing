@@ -5,13 +5,16 @@ from django.db import models
 
 
 class Questions(models.Model):
-    quest = models.CharField('Вопросы', max_length=150)
-    answers = models.TextField('Ответы')
-    right_answer = models.TextField('Правильные ответы', blank=True, null=True)
+
     Q_TYPE = (
         ('1', 'Выберите варианты ответов'),
         ('2', 'Порядок элементов'),
     )
+
+    quest = models.CharField('Вопросы', max_length=150)
+    answers = models.TextField('Ответы')
+    right_answer = models.TextField('Правильные ответы', blank=True, null=True)
+    picture = models.ImageField('Изображения', upload_to='', null=True, blank=True, max_length=255)
     quest_type = models.CharField('Тип вопроса', max_length=1, choices=Q_TYPE, blank=True)
 
     def __str__(self):
