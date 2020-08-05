@@ -1,18 +1,15 @@
 from .models import CustomUser
 from django.forms import ModelForm
 from django import forms
-from .impclasses import *
 from django.contrib.auth.forms import UserCreationForm, ReadOnlyPasswordHashField
 
 
 class CBForm(forms.Form):
-    ans = forms.MultipleChoiceField(required=False, label=quest.get_question(), widget=forms.CheckboxSelectMultiple,
-                                    choices=quest.get_answers())
+    ans = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple)
 
 
 class SeqForm(forms.Form):
-    ans = forms.MultipleChoiceField(required=True, label=quest.get_question(), widget=forms.Select,
-                                    choices=quest.get_answers())
+    ans = forms.MultipleChoiceField(required=True, widget=forms.Select)
 
 
 class UserRegistrationForm(UserCreationForm, ModelForm):
