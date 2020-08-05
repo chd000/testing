@@ -1,8 +1,8 @@
 # testing
 
-1)Clone rep with git clone
-2)cd testing
-3)python3 -m venv evn
-4)source env/bin/activate
-5)pip install -r requirements.txt
-6)python manage.py runserver
+1)Clone rep with git clone<br>
+2)cd testing<br>
+3)python3 -m venv evn<br>
+4)source env/bin/activate<br>
+5)pip install -r requirements.txt<br>
+6)python manage.py runserver<br>
