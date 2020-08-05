@@ -1,6 +1,7 @@
 from django.contrib import messages
 from .forms import UserRegistrationForm, CBForm, SeqForm
 from .models import Questions
+from .models import Questions
 from .questions.questions import QuestionsForTest
 from django.shortcuts import redirect, render
 from .impclasses import *
@@ -26,24 +27,24 @@ def registration(request):
 
 
 def test(request):
-    form = None
+    question = quest.get_questions_list()
     error = ''
     if request.method == 'POST':
-        if quest.get_type() == '1':
-            form = CBForm(request.POST)
-        elif quest.get_type() == '2':
-            form = SeqForm(request.POST)
-            if form.is_valid():
-                form.save()
-            else:
-                error = ' Форма была неверной '
-    if quest.get_type() == '1':
-        form = CBForm()
-    elif quest.get_type() == '2':
-        form = SeqForm()
+        cbform = CBForm(request.POST)
+        seqform = SeqForm(request.POST)
+        if cbform.is_valid() and seqform.is_valid():
+            cbform.save()
+            seqform.save()
+        else:
+            error = ' Форма была неверной '
+
+    cbform = CBForm()
+    seqform = SeqForm()
     context = {
-        'form': form,
-        'error': error
+        'cbform': cbform,
+        'seqform': seqform,
+        'error': error,
+        'questions': question,
     }
     return render(request, 'main/test.html', context)
 
