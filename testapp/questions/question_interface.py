@@ -7,27 +7,7 @@ class QuestionsInterface(ABC):
         super().__init__()
 
     @abstractmethod
-    def pick_question(self, pos):
-        pass
-
-    @abstractmethod
-    def get_type(self):
-        pass
-
-    @abstractmethod
-    def get_answers(self):
-        pass
-
-    @abstractmethod
-    def get_question(self):
-        pass
-
-    @abstractmethod
-    def get_right_answers(self):
-        pass
-
-    @abstractmethod
-    def print_question_info(self):
+    def get_questions_list(self):
         pass
 
     @abstractmethod
