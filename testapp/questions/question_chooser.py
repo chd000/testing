@@ -4,7 +4,7 @@ from ..models import Questions
 
 questions = Questions.objects.all()
 edited_questions = json.loads(
-    serializers.serialize('json', questions, fields=('quest', 'answers', 'right_answer', 'quest_type')))
+    serializers.serialize('json', questions, fields=('quest', 'answers', 'right_answer', 'quest_type', 'picture')))
 
 all_questions_lst = list()
 
