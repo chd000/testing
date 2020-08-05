@@ -1,0 +1,17 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+Страница для создания задач
+{% endblock %}
+
+{% block content %}
+<h1>Создать задание</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.quest }}<br>
+    {{ form.answers }}<br>
+    {{ form.level }}<br>
+    <button type="submit" class="btn btn-success">Добавить</button>
+    <span>{{ error }}</span>
+</form>
+{% endblock %}

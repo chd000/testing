@@ -1,0 +1,29 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<h1>Главная страница</h1>
+<p>You have visited this page {{ num_visits }}
+    {% if num_visits == 1 %}
+    time.
+    {% else %}
+    times.
+    {% endif %}
+</p>
+{% if user.is_authenticated %}
+<div class="alert alert-warning mt-2">
+    <li>Вы вошли как: {{ user.get_username }}</li>
+    <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>
+    <li><a href="{% url 'test'%}">Пройти тест</a></li>
+</div>
+{% else %}
+<li>
+    <a href="{% url 'login'%}?next={{request.path}}">Войдите</a>
+    <a>Или</a>
+    <a href="{% url 'registration'%}?next={{request.path}}">Зарегестрируйтесь</a>
+</li>
+{% endif %}
+{% endblock %}

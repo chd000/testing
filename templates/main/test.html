@@ -1,0 +1,61 @@
+{% extends 'main/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+Страница теста
+{% endblock %}
+
+{% block redirect %}
+{% if user.is_authenticated %}
+<div class="alert alert-secondary mt-2">
+    <a class="btn btn-outline-primary" id="btn1" href="#">1</a>
+    <a class="btn btn-outline-primary" id="btn2" href="#">2</a>
+    <a class="btn btn-outline-primary" id="btn3" href="#">3</a>
+    <a class="btn btn-outline-primary" id="btn4" href="#">4</a>
+    <a class="btn btn-outline-primary" id="btn5" href="#">5</a><br>
+    <a class="btn btn-outline-primary" id="btn6" href="#">6</a>
+    <a class="btn btn-outline-primary" id="btn7" href="#">7</a>
+    <a class="btn btn-outline-primary" id="btn8" href="#">8</a>
+    <a class="btn btn-outline-primary" id="btn9" href="#">9</a>
+    <a class="btn btn-outline-primary" id="btn10" href="#">10</a><br>
+    <a class="btn btn-outline-primary" id="btn11" href="#">11</a>
+    <a class="btn btn-outline-primary" id="btn12" href="#">12</a>
+    <a class="btn btn-outline-primary" id="btn13" href="#">13</a>
+    <a class="btn btn-outline-primary" id="btn14" href="#">14</a>
+    <a class="btn btn-outline-primary" id="btn15" href="#">15</a><br>
+    <a class="btn btn-outline-primary" id="btn16" href="#">16</a>
+    <a class="btn btn-outline-primary" id="btn17" href="#">17</a>
+    <a class="btn btn-outline-primary" id="btn18" href="#">18</a>
+    <a class="btn btn-outline-primary" id="btn19" href="#">19</a>
+    <a class="btn btn-outline-primary" id="btn20" href="#">20</a><br>
+
+    <a href="{% url 'home' %}">Завершить тест</a>
+</div>
+{% endif %}
+{% endblock %}
+{% block content %}
+
+<h4>Ответьте на следующие вопросы</h4>
+<div class="alert alert-warning mt-2" id="area1">
+<form method="post" id='testForm1' data-url="{% url 'test' %}">
+    {% csrf_token %}
+
+    {{form|crispy}}
+</form>
+</div>
+<div class="alert alert-warning mt-2" id="area2">
+<form method="post" id='testForm2' data-url="{% url 'test' %}">
+    {% csrf_token %}
+
+    {{form|crispy}}
+</form>
+</div>
+<div class="alert alert-warning mt-2" id="area3">
+<form method="post" id='testForm3' data-url="{% url 'test' %}">
+    {% csrf_token %}
+
+    {{form|crispy}}
+</form>
+</div>
+<button type="button" value="Далее" id="nextButton" class="button">Далее</button>
+{% endblock %}

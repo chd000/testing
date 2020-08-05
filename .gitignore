@@ -1,0 +1,13 @@
+#byte-compiled
+__pycache__/
+*.py[cod]
+
+#ide files
+.idea/
+
+#django staff
+*.log
+local_settings.py
+
+#env
+env/
