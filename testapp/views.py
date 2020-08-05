@@ -29,18 +29,18 @@ def test(request):
     form = None
     error = ''
     if request.method == 'POST':
-       # if quest.get_type() == '1':
-            #form = CBForm(request.POST)
-        #elif quest.get_type() == '2':
-         #   form = SeqForm(request.POST)
-         #   if form.is_valid():
-         #       form.save()
-         #  else:
+        if quest.get_type() == '1':
+            form = CBForm(request.POST)
+        elif quest.get_type() == '2':
+            form = SeqForm(request.POST)
+            if form.is_valid():
+                form.save()
+            else:
                 error = ' Форма была неверной '
-    #if quest.get_type() == '1':
-     #   form = CBForm()
-    #elif quest.get_type() == '2':
-    #    form = SeqForm()
+    if quest.get_type() == '1':
+        form = CBForm()
+    elif quest.get_type() == '2':
+        form = SeqForm()
     context = {
         'form': form,
         'error': error

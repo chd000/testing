@@ -6,15 +6,13 @@ from django.contrib.auth.forms import UserCreationForm, ReadOnlyPasswordHashFiel
 
 
 class CBForm(forms.Form):
-    pass
-   # ans = forms.MultipleChoiceField(required=False, label=quest.get_question(), widget=forms.CheckboxSelectMultiple,
-    #                                choices=quest.get_answers())
+    ans = forms.MultipleChoiceField(required=False, label=quest.get_question(), widget=forms.CheckboxSelectMultiple,
+                                    choices=quest.get_answers())
 
 
 class SeqForm(forms.Form):
-    pass
-    #ans = forms.MultipleChoiceField(required=True, label=quest.get_question(), widget=forms.Select,
-    #                                choices=quest.get_answers())
+    ans = forms.MultipleChoiceField(required=True, label=quest.get_question(), widget=forms.Select,
+                                    choices=quest.get_answers())
 
 
 class UserRegistrationForm(UserCreationForm, ModelForm):
