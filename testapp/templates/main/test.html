@@ -7,27 +7,13 @@
 
 {% block redirect %}
     {% if user.is_authenticated %}
-        <div class="alert alert-secondary mt-2">
-            <a class="btn btn-outline-primary" id="btn1" href="#">1</a>
-            <a class="btn btn-outline-primary" id="btn2" href="#">2</a>
-            <a class="btn btn-outline-primary" id="btn3" href="#">3</a>
-            <a class="btn btn-outline-primary" id="btn4" href="#">4</a>
-            <a class="btn btn-outline-primary" id="btn5" href="#">5</a><br>
-            <a class="btn btn-outline-primary" id="btn6" href="#">6</a>
-            <a class="btn btn-outline-primary" id="btn7" href="#">7</a>
-            <a class="btn btn-outline-primary" id="btn8" href="#">8</a>
-            <a class="btn btn-outline-primary" id="btn9" href="#">9</a>
-            <a class="btn btn-outline-primary" id="btn10" href="#">10</a><br>
-            <a class="btn btn-outline-primary" id="btn11" href="#">11</a>
-            <a class="btn btn-outline-primary" id="btn12" href="#">12</a>
-            <a class="btn btn-outline-primary" id="btn13" href="#">13</a>
-            <a class="btn btn-outline-primary" id="btn14" href="#">14</a>
-            <a class="btn btn-outline-primary" id="btn15" href="#">15</a><br>
-            <a class="btn btn-outline-primary" id="btn16" href="#">16</a>
-            <a class="btn btn-outline-primary" id="btn17" href="#">17</a>
-            <a class="btn btn-outline-primary" id="btn18" href="#">18</a>
-            <a class="btn btn-outline-primary" id="btn19" href="#">19</a>
-            <a class="btn btn-outline-primary" id="btn20" href="#">20</a><br>
+        <div class="alert alert-secondary mt-2" xmlns="">
+            {% for i in numbers %}
+                <a class="btn btn-outline-primary" id="navButton" href="#">{{ i|add:1 }}</a>
+                {% if i == 4 or i == 9 or i == 14 or i == 19 %}
+                    <br>
+                {% endif %}
+            {% endfor %}
             <style>
                 .btn-outline-primary {
                     display: inline-block;
@@ -94,16 +80,17 @@
                     </table>
                     <td>
                         {% if question.picture %}
-                        <img src={{ question.picture.url }}/>
+                            <img src={{ question.picture.url }}>
                         {% endif %}
                     </td>
                     {% for el in question.2 %}
-                        <label><input type="checkbox" name="checkbox" value={{ el }} id={{ el }}/> {{ el }}</label><br>
+                        <label><input type="checkbox" class="checkbox" onclick="getCheckedCheckBoxes()" name="checkbox"
+                                      value="{{ el }}" id="{{ question.1 }}"/> {{ el }}</label><br>
                     {% endfor %}
+                <input type="hidden" id="url" name="url" value="">
                 </form>
             </div>
         {% endfor %}
-        <button type="button" onclick="getCheckedCheckBoxes()" value="Далее" id="nextButton" class="button">Далее
-        </button>
+        <button type="button" value="Далее" id="nextButton" class="button">Далее</button>
     </div>
 {% endblock %}
