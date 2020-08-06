@@ -8,6 +8,8 @@ class QuestionsForTest(QuestionsInterface):
     def __init__(self):
         super(QuestionsInterface, self).__init__()
         self.question_list = self.create_variant_question_list()
+        self.right_answers = self.create_right_answers()
+        self.counter = 0
 
     def create_variant_question_list(self):
         question_list = list()
@@ -24,3 +26,22 @@ class QuestionsForTest(QuestionsInterface):
 
     def get_questions_list(self):
         return self.question_list
+
+    def create_right_answers(self):
+        right_ans = list()
+        for answers in self.question_list:
+            variants = list()
+            for ans in answers[3]:
+                variants.append(ans)
+            right_ans.append(variants)
+        return right_ans
+
+    def get_answers(self):
+        return self.right_answers
+
+    def increase_counter(self):
+        self.counter += 1
+        return self.counter
+
+    def get_counter(self):
+        return self.counter

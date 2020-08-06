@@ -13,3 +13,19 @@ class QuestionsInterface(ABC):
     @abstractmethod
     def create_variant_question_list(self):
         pass
+
+    @abstractmethod
+    def create_right_answers(self):
+        pass
+
+    @abstractmethod
+    def get_answers(self):
+        pass
+
+    @abstractmethod
+    def increase_counter(self):
+        pass
+
+    @abstractmethod
+    def get_counter(self):
+        pass
