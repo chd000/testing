@@ -4,9 +4,8 @@ function getCheckedCheckBoxes() {
   for (let index = 0; index < checkboxes.length; index++) {
      if (checkboxes[index].checked) {
         checkboxesChecked.push(checkboxes[index].value);
-        alert(checkboxes[index].value);
      }
   }
+  console.log(checkboxesChecked)
   return checkboxesChecked;
 }
-console.log('static js')
