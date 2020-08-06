@@ -1,3 +1,5 @@
+import json
+
 from django.contrib import messages
 from .forms import UserRegistrationForm, CBForm, SeqForm
 from .models import Questions
@@ -37,10 +39,10 @@ def test(request):
             seqform.save()
         else:
             error = ' Форма была неверной '
-
     cbform = CBForm()
     seqform = SeqForm()
     context = {
+        'numbers': range(20),
         'cbform': cbform,
         'seqform': seqform,
         'error': error,
@@ -58,3 +60,18 @@ def index(request):
 def quest_list(request):
     question_query = Questions.objects.all()
     return render(request, 'main/list.html', {'title': 'Страница со списком вопросов', 'questions': question_query})
+
+
+def result(request):
+    # ver_system = Testing()
+    # ver_system.get_right_answers_lst()
+    user_answers_list = request.GET.get('list')
+    list_ans = list()
+    leng = str(user_answers_list)
+    for i in range(len(quest.get_answers())):
+        if list_ans[i] == quest.get_answers()[i]:
+            quest.increase_counter()
+    context = {
+        'mark': quest.get_counter()
+    }
+    return render(request, 'main/result.html', context)
