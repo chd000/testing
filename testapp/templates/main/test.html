@@ -9,7 +9,7 @@
     {% if user.is_authenticated %}
         <div class="alert alert-secondary mt-2" xmlns="">
             {% for i in numbers %}
-                <a class="btn btn-outline-primary" id="navButton" href="#">{{ i|add:1 }}</a>
+                <a class="btn btn-outline-primary" id="navButton" href='#'>{{ i|add:1 }}</a>
                 {% if i == 4 or i == 9 or i == 14 or i == 19 %}
                     <br>
                 {% endif %}
@@ -52,7 +52,7 @@
                     cursor: pointer;
                 }
             </style>
-            <a href="{% url 'home' %}">Завершить тест</a>
+            <a href="{% url 'result' %}">Завершить тест</a>
         </div>
     {% endif %}
 {% endblock %}
@@ -91,6 +91,6 @@
                 </form>
             </div>
         {% endfor %}
-        <button type="button" value="Далее" id="nextButton" class="button">Далее</button>
+        <button type="button" value="Отправить ответы" id="nextButton" class="button">Далее</button>
     </div>
 {% endblock %}

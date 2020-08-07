@@ -1,10 +1,6 @@
-import json
-
 from django.contrib import messages
 from .forms import UserRegistrationForm, CBForm, SeqForm
 from .models import Questions
-from .models import Questions
-from .questions.questions import QuestionsForTest
 from django.shortcuts import redirect, render
 from .impclasses import *
 
@@ -63,14 +59,21 @@ def quest_list(request):
 
 
 def result(request):
-    # ver_system = Testing()
-    # ver_system.get_right_answers_lst()
-    user_answers_list = request.GET.get('list')
-    list_ans = list()
-    leng = str(user_answers_list)
+    user_answers_list = request.GET.getlist('list[]')
+    ans_list = list()
+    for j in range(20):
+        var_list = list()
+        ans_list.append(var_list)
+    print('Лист правильных ответов: {}'.format(quest.get_answers()))
     for i in range(len(quest.get_answers())):
-        if list_ans[i] == quest.get_answers()[i]:
+        for j in range(len(quest.get_answers()[i])):
+            if quest.get_answers()[i][j] in user_answers_list:
+                ans_list[i].append(quest.get_answers()[i][j])
+    for k in range(20):
+        if ans_list[k] == quest.get_answers()[k]:
+            print(ans_list[k])
             quest.increase_counter()
+    print('Ваши ответы: {}'.format(ans_list))
     context = {
         'mark': quest.get_counter()
     }

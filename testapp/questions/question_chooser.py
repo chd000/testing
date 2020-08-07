@@ -11,11 +11,12 @@ all_questions_lst = list()
 
 def create_all_question_list():
     for elements in edited_questions:
-        question_type = elements['fields']['quest_type']
-        question = elements['fields']['quest']
-        answers = elements['fields']['answers'].split(sep=';')
-        right_answers = elements['fields']['right_answer'].split(sep=';')
-        all_questions_lst.append((question_type, question, answers, right_answers))
+        if elements['fields']['quest_type'] == '1':
+            question_type = elements['fields']['quest_type']
+            question = elements['fields']['quest']
+            answers = elements['fields']['answers'].split(sep=';')
+            right_answers = elements['fields']['right_answer'].split(sep=';')
+            all_questions_lst.append((question_type, question, answers, right_answers))
 
 
 create_all_question_list()

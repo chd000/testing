@@ -41,7 +41,6 @@ class QuestionsForTest(QuestionsInterface):
 
     def increase_counter(self):
         self.counter += 1
-        return self.counter
 
     def get_counter(self):
         return self.counter

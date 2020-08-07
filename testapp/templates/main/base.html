@@ -32,24 +32,27 @@
 <script>
     (function ($) {
         $(document).on("click", "#nextButton", function () {
+            let csrftoken = $("[name=csrfmiddlewaretoken]").val();
             $.ajax({
                 type: "GET",
                 url: 'http://127.0.0.1:8000/result',
+                headers:{"X-CSRFToken": csrftoken},
                 data: {
-                    list: JSON.stringify(getCheckedCheckBoxes())
+                    list: getCheckedCheckBoxes()
                 },
+                dataType: 'json',
                 success: function () {
 
                 }
             })
-            location.href = "http://127.0.0.1:8000/result";
+            alert('Ваши ответы отправлены, нажмите "Завершить тест"')
         })
     })(jQuery);
+
 
     function getCheckedCheckBoxes() {
         let checkboxes = document.getElementsByClassName('checkbox');
         let checkboxesChecked = [];
-        let tmp;
         for (let index = 0; index < checkboxes.length; index++) {
             if (checkboxes[index].checked) {
                 checkboxesChecked.push(checkboxes[index].value);

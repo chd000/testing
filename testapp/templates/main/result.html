@@ -1,10 +1,17 @@
 {% extends 'main/base.html' %}
 
 {% block title %}
-Ваши результаты
+    Ваши результаты
 {% endblock %}
 {% block content %}
-<h1>Вы набрали: </h1>
-{{ mark }}
+    <h1>Вы набрали: {{ mark }}/20
+        {% if mark == 1 %}
+            балл.
+        {% elif mark == 2 or mark == 3 or mark == 4 %}
+            балла.
+        {% else %}
+            баллов.
+        {% endif %}
+    </h1>
 {% endblock %}
 
