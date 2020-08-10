@@ -9,7 +9,7 @@ class CBForm(forms.Form):
 
 
 class SeqForm(forms.Form):
-    ans = forms.MultipleChoiceField(required=True, widget=forms.Select)
+    ans = forms.MultipleChoiceField(required=True, widget=forms.SelectMultiple)
 
 
 class UserRegistrationForm(UserCreationForm, ModelForm):

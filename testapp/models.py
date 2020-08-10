@@ -5,7 +5,6 @@ from django.db import models
 
 
 class Questions(models.Model):
-
     Q_TYPE = (
         ('1', 'Выберите варианты ответов'),
         ('2', 'Порядок элементов'),
@@ -30,19 +29,19 @@ class UserManager(BaseUserManager):
         if not email:
             raise ValueError('У пользователя должен быть адрес электронной почты')
 
-        user = self.model(email=self.normalize_email(email),)
+        user = self.model(email=self.normalize_email(email), )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_staffuser(self, email, password):
-        user = self.create_user(email, password=password,)
+        user = self.create_user(email, password=password, )
         user.staff = True
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password):
-        user = self.create_user(email, password=password,)
+        user = self.create_user(email, password=password, )
         user.staff = True
         user.admin = True
         user.save(using=self._db)
@@ -50,7 +49,7 @@ class UserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser):
-    email = models.EmailField(verbose_name='Адрес электронной почты', max_length=255, unique=True,)
+    email = models.EmailField(verbose_name='Адрес электронной почты', max_length=255, unique=True, )
     last_name = models.CharField('Фамилия', max_length=100)
     first_name = models.CharField('Имя', max_length=100)
     active = models.BooleanField(default=True)
@@ -92,3 +91,17 @@ class CustomUser(AbstractBaseUser):
     class Meta:
         verbose_name = 'Пользователь сайта'
         verbose_name_plural = 'Пользователи сайта'
+
+
+class ResultTable(models.Model):
+    email = models.EmailField(verbose_name='Адрес электронной почты', max_length=255, )
+    last_name = models.CharField('Фамилия', max_length=100)
+    first_name = models.CharField('Имя', max_length=100)
+    mark = models.IntegerField('Баллы')
+
+    def __str__(self):
+        return self.email
+
+    class Meta:
+        verbose_name = 'Результат теста'
+        verbose_name_plural = 'Результаты теста'

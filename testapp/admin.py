@@ -4,11 +4,15 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.http import HttpResponse
 from .forms import UserAdminCreationForm, UserAdminChangeForm
-from .models import Questions, CustomUser
+from .models import Questions, CustomUser, ResultTable
 
 
 class QuestionAdmin(admin.ModelAdmin):
     list_display = ('quest', 'answers', 'right_answer', 'quest_type')
+
+
+class ResultsAdmin(admin.ModelAdmin):
+    list_display = ('email', 'last_name', 'first_name', 'mark')
 
 
 class UserAdmin(BaseUserAdmin):
@@ -38,3 +42,4 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Questions, QuestionAdmin)
+admin.site.register(ResultTable, ResultsAdmin)

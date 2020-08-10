@@ -4,14 +4,15 @@
     Ваши результаты
 {% endblock %}
 {% block content %}
-    <h1>Вы набрали: {{ mark }}/20
+    <h1>Вы набрали: {{ mark }}
         {% if mark == 1 %}
-            балл.
+            балл
         {% elif mark == 2 or mark == 3 or mark == 4 %}
-            балла.
+            балла
         {% else %}
-            баллов.
+            баллов
         {% endif %}
+    из 20.
     </h1>
 {% endblock %}
 

@@ -15,7 +15,10 @@
 
         .block {
             padding-left: 10px;
-
+            position: sticky;
+            top: 10px;
+            left: 10px;
+            margin: 10px;
         }
 
         .container {
@@ -25,44 +28,21 @@
             margin: 0 auto;
             padding-left: 85px;
         }
+
+        img {
+            box-shadow: 0 0 15px 0 #000;
+            margin: 10px 10px 15px 5px;
+            padding: 10px;
+            display: inline-flex;
+            vertical-align: top;
+            flex-wrap: wrap;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script>
-    (function ($) {
-        $(document).on("click", "#nextButton", function () {
-            let csrftoken = $("[name=csrfmiddlewaretoken]").val();
-            $.ajax({
-                type: "GET",
-                url: 'http://127.0.0.1:8000/result',
-                headers:{"X-CSRFToken": csrftoken},
-                data: {
-                    list: getCheckedCheckBoxes()
-                },
-                dataType: 'json',
-                success: function () {
-
-                }
-            })
-            alert('Ваши ответы отправлены, нажмите "Завершить тест"')
-        })
-    })(jQuery);
-
-
-    function getCheckedCheckBoxes() {
-        let checkboxes = document.getElementsByClassName('checkbox');
-        let checkboxesChecked = [];
-        for (let index = 0; index < checkboxes.length; index++) {
-            if (checkboxes[index].checked) {
-                checkboxesChecked.push(checkboxes[index].value);
-            }
-        }
-        console.log(checkboxesChecked)
-        return checkboxesChecked;
-    }
-
-</script>
+{% block scripts %} {% endblock %}
 <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal">Программа тестирования сотрудников</h5>
     <nav class="my-2 my-md-0 mr-md-3">

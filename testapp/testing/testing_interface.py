@@ -1,23 +1,23 @@
 from abc import ABC, abstractmethod
 
 
-class TestInterface(ABC):
+class QuestionsInterface(ABC):
 
     def __init__(self):
         super().__init__()
 
     @abstractmethod
-    def create_right_answers_lst(self):
+    def get_questions_list(self):
         pass
 
     @abstractmethod
-    def get_right_answers_lst(self):
+    def create_variant_question_list(self):
         pass
 
     @abstractmethod
-    def check(self):
+    def create_right_answers(self):
         pass
 
     @abstractmethod
-    def get_mark(self):
+    def get_answers(self):
         pass

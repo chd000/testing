@@ -74,6 +74,7 @@ WSGI_APPLICATION = 'testing.wsgi.application'
 
 AUTHENTICATION_BACKENDS = {
     'testapp.EmailBackend.CustomBackend',
+    'django.contrib.auth.backends.ModelBackend',
 }
 
 # Database
@@ -119,10 +120,10 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 LOGIN_REDIRECT_URL = '/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-AUTH_USER_MODEL = 'testapp.CustomUser'
+#AUTH_USER_MODEL = 'testapp.CustomUser'

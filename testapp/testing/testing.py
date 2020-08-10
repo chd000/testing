@@ -1,6 +1,6 @@
 import random
 from .question_chooser import *
-from .question_interface import QuestionsInterface
+from .testing_interface import QuestionsInterface
 
 
 class QuestionsForTest(QuestionsInterface):
@@ -9,17 +9,16 @@ class QuestionsForTest(QuestionsInterface):
         super(QuestionsInterface, self).__init__()
         self.question_list = self.create_variant_question_list()
         self.right_answers = self.create_right_answers()
-        self.counter = 0
 
     def create_variant_question_list(self):
         question_list = list()
-        counter = 0
+        count = 0
         for i in range(len(all_questions_lst)):
             rnd = random.randint(1, len(all_questions_lst) - 1)
             question_list.append(all_questions_lst[rnd])
             all_questions_lst.remove(all_questions_lst[rnd])
-            counter += 1
-            if counter == 20:
+            count += 1
+            if count == 20:
                 break
         create_all_question_list()
         return question_list
@@ -38,9 +37,3 @@ class QuestionsForTest(QuestionsInterface):
 
     def get_answers(self):
         return self.right_answers
-
-    def increase_counter(self):
-        self.counter += 1
-
-    def get_counter(self):
-        return self.counter
