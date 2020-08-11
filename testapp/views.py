@@ -4,6 +4,7 @@ from .models import Questions, ResultTable
 from django.shortcuts import redirect, render
 from .impclasses import *
 from .testing.question_chooser import *
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 def registration(request):
@@ -57,11 +58,6 @@ def index(request):
     return render(request, 'main/index.html', {'title': 'Главная страница сайта', 'num_visits': num_visits})
 
 
-def quest_list(request):
-    question_query = Questions.objects.all()
-    return render(request, 'main/list.html', {'title': 'Страница со списком вопросов', 'testing': question_query})
-
-
 def result(request):
     user_answers_list = request.GET.getlist('list[]')
     for i in range(len(quest.get_answers())):
@@ -69,6 +65,8 @@ def result(request):
             if quest.get_answers()[i][j] in user_answers_list:
                 ans_list[i].append(quest.get_answers()[i][j])
     counter = 0
+    print('Верные ответы: {}'.format(quest.get_answers()))
+    print('Ваши ответы: {}'.format(ans_list))
     for k in range(20):
         if ans_list[k] == quest.get_answers()[k]:
             counter += 1
