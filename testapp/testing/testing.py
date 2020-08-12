@@ -16,6 +16,7 @@ class QuestionsForTest(QuestionsInterface):
         for i in range(len(all_questions_lst)):
             rnd = random.randint(1, len(all_questions_lst) - 1)
             question_list.append(all_questions_lst[rnd])
+            print(all_questions_lst[rnd])
             all_questions_lst.remove(all_questions_lst[rnd])
             count += 1
             if count == 20:

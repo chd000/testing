@@ -9,49 +9,11 @@
     {% if user.is_authenticated %}
         <div class="alert alert-secondary mt-2" xmlns="">
             {% for i in numbers %}
-                <a class="btn btn-outline-primary" id="navButton" href='#'>{{ i|add:1 }}</a>
+                <a class="btn btn-outline-primary" id="navButton" onclick="scrollToLabel()">{{ i|add:1 }}</a>
                 {% if i == 4 or i == 9 or i == 14 or i == 19 %}
                     <br>
                 {% endif %}
             {% endfor %}
-            <style>
-                .btn-outline-primary {
-                    display: inline-block;
-                    vertical-align: top;
-                    padding: 10px 15px;
-                    margin-bottom: 4px;
-                    width: 50px;
-                    height: 50px;
-                    border: 2px solid #fff;
-
-                    color: black;
-                    text-transform: uppercase;
-                    font-size: 14px;
-                    text-decoration: none;
-                }
-
-                .button {
-                    background-color: #4CAF50;
-                    border: none;
-                    color: white;
-                    padding: 10px 15px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 16px;
-                    margin: 2px 2px;
-                    cursor: pointer;
-                }
-
-                label {
-                    padding-left: 10px;
-                    margin: 0 0 10px;
-                }
-
-                label:hover {
-                    cursor: pointer;
-                }
-            </style>
             <a href="{% url 'result' %}">Завершить тест</a>
         </div>
     {% endif %}
@@ -70,44 +32,46 @@
                     success: function () {
                     }
                 })
-                alert('Ваши ответы отправлены, нажмите "Завершить тест"')
                 location.href = 'http://127.0.0.1:8000/result'
             })
         })(jQuery);
 
-        $("input.box").each(function () {
-            var mycookie = $.cookie($(this).attr('name'));
-            if (mycookie && mycookie == "true") {
+        $(document).ready(function () {
+
+            $("select.myselect").on('change', function () {
+                $.cookie('myCookie', $('select.myselect').val());
+            });
+
+            let cookieValue = $.cookie('myCookie');
+            if (typeof cookieValue !== "undefined") {
+                $('select.myselect').val(cookieValue);
+            }
+        });
+
+        $("input.checkbox").each(function () {
+            let mycookie = $.cookie($(this).attr('id'));
+            if (mycookie && mycookie === "true") {
                 $(this).prop('checked', mycookie);
             }
         });
-        $("input.box").change(function () {
-            $.cookie($(this).attr("name"), $(this).prop('checked'), {
+
+
+        $("input.checkbox").change(function () {
+            $.cookie($(this).attr('id'), $(this).prop('checked'), {
                 path: '/',
-                expires: 365
+                expires: 365,
             });
         });
 
-        function setCookie(name, value, options = {}) {
-            options = {
-                path: '/',
-                ...options
-            };
-            if (options.expires instanceof Date) {
-                options.expires = options.expires.toUTCString();
-            }
-            let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-            for (let optionKey in options) {
-                updatedCookie += "; " + optionKey;
-                let optionValue = options[optionKey];
-                if (optionValue !== true) {
-                    updatedCookie += "=" + optionValue;
-                }
-            }
-            document.cookie = updatedCookie;
-        }
+        //$(document).ready(function () {
+        //   $("#navButton").click(function () {
+        //     $('html, body').animate({
+        //       scrollTop: $("#questionArea").offset().top
+        //  }, 1000);
+        //});
+        //});
 
-        function getChecked() {
+        function getSequence() {
             let selected = document.getElementsByClassName('myselect')
             let list = []
             for (let index = 0; index < selected.length; index++) {
@@ -130,8 +94,18 @@
 
         function resultList() {
             let allAnswerList = [];
-            allAnswerList = getCheckedCheckBoxes().concat(getChecked())
+            allAnswerList = getCheckedCheckBoxes().concat(getSequence())
             return allAnswerList
+        }
+
+        function scrollToLabel() {
+            let buttonNav = document.getElementById('navButton')
+            console.log(buttonNav.length)
+            for (let index = 0; index < buttonNav.length; index++) {
+                let el = document.getElementById('questionArea' + index);
+                console.log(el.length)
+                el.scrollIntoView({behavior: "smooth", block: "center"})
+            }
         }
     </script>
 {% endblock %}
@@ -139,7 +113,7 @@
     <h4>Ответьте на следующие вопросы</h4>
     <div class="alert alert-warning mt-2" id="mainArea">
         {% for question in testing %}
-            <div class="alert alert-secondary mt-2" id="questionArea">
+            <div class="alert alert-secondary mt-2" id="questionArea{{ forloop.counter0 }}">
                 <form method="post" id='testForm' data-url="{% url 'test' %}">
                     {% csrf_token %}
                     <table>
@@ -161,7 +135,7 @@
                             <label>
                                 <input type="checkbox" class="checkbox" onclick="getCheckedCheckBoxes()"
                                        name="checkbox"
-                                       value="{{ el }}" id="{{ question.1 }}"/> {{ el }}
+                                       value="{{ el }}" id="{{ question.1 }}{{ forloop.counter0 }}"/> {{ el }}
                             </label><br>
                         {% endfor %}
                     {% else %}
@@ -175,10 +149,10 @@
                         <label>
                             {% for num in question.2 %}
                                 <h6>{{ forloop.counter }}. </h6>
-                                <select id="myselect" class="myselect" onchange="getChecked()">
+                                <select id="myselect" class="myselect" name="myselect" onchange="getSequence()">
                                     <option disabled selected></option>
                                     {% for el in question.2 %}
-                                        <option value="{{ el }}" id="{{ question.1 }}"
+                                        <option value="{{ el }}" id="{{ question.1 }}{{ forloop.counter0 }}"
                                                 label="{{ el }}">
                                         </option>
                                     {% endfor %}
@@ -190,12 +164,6 @@
                 </form>
             </div>
         {% endfor %}
-        <label>
-            <input class="box" type="checkbox" name="1"/>
-            <input class="box" type="checkbox" name="2"/>
-            <input class="box" type="checkbox" name="3"/>
-            <input class="box" type="checkbox" name="4"/>
-        </label>
         <button type="button" value="Отправить ответы" id="nextButton" class="button">Отправить ответы</button>
     </div>
 {% endblock %}
