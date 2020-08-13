@@ -4,14 +4,6 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, ReadOnlyPasswordHashField
 
 
-class CBForm(forms.Form):
-    ans = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple)
-
-
-class SeqForm(forms.Form):
-    ans = forms.MultipleChoiceField(required=True, widget=forms.SelectMultiple)
-
-
 class UserRegistrationForm(UserCreationForm, ModelForm):
     email = forms.EmailField(required=True)
 
