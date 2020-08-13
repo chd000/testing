@@ -9,7 +9,8 @@
     {% if user.is_authenticated %}
         <div class="alert alert-secondary mt-2" xmlns="">
             {% for i in numbers %}
-                <a class="btn btn-outline-primary" id="navButton" onclick="scrollToLabel()">{{ i|add:1 }}</a>
+                <a class="btn btn-outline-primary" id="{{ forloop.counter0 }}"
+                   onclick="scrollToQuestion(this)">{{ i|add:1 }}</a>
                 {% if i == 4 or i == 9 or i == 14 or i == 19 %}
                     <br>
                 {% endif %}
@@ -21,7 +22,7 @@
 {% block scripts %}
     <script>
         (function ($) {
-            $(document).on("click", "#nextButton", function () {
+            $(document).on("click", "#sendAnsButton", function () {
                 $.ajax({
                     type: "GET",
                     url: 'http://127.0.0.1:8000/result',
@@ -32,21 +33,21 @@
                     success: function () {
                     }
                 })
-                location.href = 'http://127.0.0.1:8000/result'
+                alert('Ваши ответы отправлены, нажмите "Завершить тест"')
             })
         })(jQuery);
 
-        $(document).ready(function () {
+        /* $(document).ready(function () {
+             $("select.myselect").on('change', function () {
+                 $.cookie('myCookie', $('select.myselect').val());
+             });
 
-            $("select.myselect").on('change', function () {
-                $.cookie('myCookie', $('select.myselect').val());
-            });
+             let cookieValue = $.cookie('myCookie');
+             if (typeof cookieValue !== "undefined") {
+                 $('select.myselect').val(cookieValue);
+             }
+         });
 
-            let cookieValue = $.cookie('myCookie');
-            if (typeof cookieValue !== "undefined") {
-                $('select.myselect').val(cookieValue);
-            }
-        });
 
         $("input.checkbox").each(function () {
             let mycookie = $.cookie($(this).attr('id'));
@@ -62,20 +63,13 @@
                 expires: 365,
             });
         });
-
-        //$(document).ready(function () {
-        //   $("#navButton").click(function () {
-        //     $('html, body').animate({
-        //       scrollTop: $("#questionArea").offset().top
-        //  }, 1000);
-        //});
-        //});
+        */
 
         function getSequence() {
-            let selected = document.getElementsByClassName('myselect')
+            let selectors = document.getElementsByClassName('myselect')
             let list = []
-            for (let index = 0; index < selected.length; index++) {
-                list.push(selected[index].value)
+            for (let index = 0; index < selectors.length; index++) {
+                list.push(selectors[index].value)
             }
             return list;
         }
@@ -83,29 +77,39 @@
         function getCheckedCheckBoxes() {
             let checkboxes = document.getElementsByClassName('checkbox');
             let checkboxesChecked = [];
+            button.style.backgroundColor = '#e6e6e6';
             for (let index = 0; index < checkboxes.length; index++) {
                 if (checkboxes[index].checked) {
+                    button.style.backgroundColor = '#a6a6a6';
                     checkboxesChecked.push(checkboxes[index].value);
                 }
             }
-            console.log(checkboxesChecked)
             return checkboxesChecked;
         }
 
         function resultList() {
-            let allAnswerList = [];
-            allAnswerList = getCheckedCheckBoxes().concat(getSequence())
-            return allAnswerList
+            let allAnswersList = [];
+            allAnswersList = getCheckedCheckBoxes().concat(getSequence())
+            return allAnswersList
         }
 
-        function scrollToLabel() {
-            let buttonNav = document.getElementById('navButton')
-            console.log(buttonNav.length)
-            for (let index = 0; index < buttonNav.length; index++) {
-                let el = document.getElementById('questionArea' + index);
-                console.log(el.length)
-                el.scrollIntoView({behavior: "smooth", block: "center"})
+        function changeColorIfAns(type) {
+            if (type === 1) {
+                let selected = document.getElementsByClassName('myselect')
             }
+            if (type === 2) {
+                let checkboxes = document.getElementsByClassName('checkbox')
+                for (let index = 0; index < checkboxes.length; index++){
+                    if (checkboxes[index].checked){
+
+                    }
+                }
+            }
+        }
+
+        function scrollToQuestion(obj) {
+            let thisId = obj.id
+            document.getElementById('questionArea' + thisId).scrollIntoView({behavior: "smooth", block: "center"});
         }
     </script>
 {% endblock %}
@@ -164,6 +168,6 @@
                 </form>
             </div>
         {% endfor %}
-        <button type="button" value="Отправить ответы" id="nextButton" class="button">Отправить ответы</button>
+        <button type="button" value="Отправить ответы" id="sendAnsButton" class="button">Отправить ответы</button>
     </div>
 {% endblock %}
