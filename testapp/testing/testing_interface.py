@@ -7,6 +7,14 @@ class QuestionsInterface(ABC):
         super().__init__()
 
     @abstractmethod
+    def create_ans_list(self):
+        pass
+
+    @abstractmethod
+    def get_ans_list(self):
+        pass
+
+    @abstractmethod
     def get_questions_list(self):
         pass
 

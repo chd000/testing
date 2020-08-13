@@ -9,18 +9,18 @@ class QuestionsForTest(QuestionsInterface):
         super(QuestionsInterface, self).__init__()
         self.question_list = self.create_variant_question_list()
         self.right_answers = self.create_right_answers()
+        self.user_ans_list = self.create_ans_list()
 
     def create_variant_question_list(self):
         question_list = list()
         count = 0
         for i in range(len(all_questions_lst)):
-            rnd = random.randint(1, len(all_questions_lst) - 1)
-            question_list.append(all_questions_lst[rnd])
-            print(all_questions_lst[rnd])
-            all_questions_lst.remove(all_questions_lst[rnd])
-            count += 1
             if count == 20:
                 break
+            rnd = random.randint(1, len(all_questions_lst) - 1)
+            if all_questions_lst[rnd] not in question_list:
+                question_list.append(all_questions_lst[rnd])
+                count += 1
         create_all_question_list()
         return question_list
 
@@ -35,6 +35,16 @@ class QuestionsForTest(QuestionsInterface):
                 variants.append(ans)
             right_ans.append(variants)
         return right_ans
+
+    def create_ans_list(self):
+        ans_list = list()
+        for count in range(20):
+            var_list = list()
+            ans_list.append(var_list)
+        return ans_list
+
+    def get_ans_list(self):
+        return self.user_ans_list
 
     def get_answers(self):
         return self.right_answers
