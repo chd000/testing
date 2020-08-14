@@ -37,14 +37,15 @@
             })
         })(jQuery);
 
-        /* $(document).ready(function () {
-             $("select.myselect").on('change', function () {
-                 $.cookie('myCookie', $('select.myselect').val());
+        /*
+         $(document).ready(function () {
+             $("#myselect option").on('change', function () {
+                 $.cookie('myCookie', $("#myselect option").val());
              });
 
              let cookieValue = $.cookie('myCookie');
              if (typeof cookieValue !== "undefined") {
-                 $('select.myselect').val(cookieValue);
+                 $("#myselect option").val(cookieValue);
              }
          });
 
@@ -65,9 +66,19 @@
         });
         */
 
+        $("#myselect option").each(function () {
+            console.log(this.id + ' ' + this.text + ' ' + this.value);
+        });
+
+
         function getSequence() {
             let selectors = document.getElementsByClassName('myselect')
             let list = []
+            $("#myselect option").each(function () {
+                if ($(this).is(':selected')) {
+                  $(this).remove();
+             }
+            });
             for (let index = 0; index < selectors.length; index++) {
                 list.push(selectors[index].value)
             }
@@ -77,10 +88,16 @@
         function getCheckedCheckBoxes() {
             let checkboxes = document.getElementsByClassName('checkbox');
             let checkboxesChecked = [];
-            button.style.backgroundColor = '#e6e6e6';
+            let buttonsArray = []
+            let checkboxesIdArray = []
+            for (let j = 0; j < 20; j++) {
+                let thisButton = document.getElementById(j)
+                thisButton.style.backgroundColor = '#e6e6e6';
+                buttonsArray.push(thisButton)
+            }
             for (let index = 0; index < checkboxes.length; index++) {
                 if (checkboxes[index].checked) {
-                    button.style.backgroundColor = '#a6a6a6';
+                    // buttonsArray[index].style.backgroundColor = '#a6a6a6';
                     checkboxesChecked.push(checkboxes[index].value);
                 }
             }
@@ -99,8 +116,8 @@
             }
             if (type === 2) {
                 let checkboxes = document.getElementsByClassName('checkbox')
-                for (let index = 0; index < checkboxes.length; index++){
-                    if (checkboxes[index].checked){
+                for (let index = 0; index < checkboxes.length; index++) {
+                    if (checkboxes[index].checked) {
 
                     }
                 }
@@ -127,29 +144,22 @@
                         </tr>
                         </thead>
                     </table>
+                    {% if question.4 %}
+                        {% for images in img %}
+                            {% if images.picture == question.4 %}
+                                <img src="{{ images.picture.url }}" width="650" alt=""><br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
                     {% if question.0 == '1' %}
-                        {% if question.4 %}
-                            {% for images in img %}
-                                {% if images.picture == question.4 %}
-                                    <img src="{{ images.picture.url }}" width="650" alt=""><br>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
                         {% for el in question.2 %}
                             <label>
                                 <input type="checkbox" class="checkbox" onclick="getCheckedCheckBoxes()"
-                                       name="checkbox"
-                                       value="{{ el }}" id="{{ question.1 }}{{ forloop.counter0 }}"/> {{ el }}
+                                       name="{{ question.1 }}"
+                                       value="{{ el }}" id="{{ question.1 }}"/> {{ el }}
                             </label><br>
                         {% endfor %}
                     {% else %}
-                        {% if question.4 %}
-                            {% for images in img %}
-                                {% if images.picture == question.4 %}
-                                    <img src="{{ images.picture.url }}" width="800" alt=""><br>
-                                {% endif %}
-                            {% endfor %}
-                        {% endif %}
                         <label>
                             {% for num in question.2 %}
                                 <h6>{{ forloop.counter }}. </h6>

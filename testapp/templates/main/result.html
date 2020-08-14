@@ -4,7 +4,7 @@
     Ваши результаты
 {% endblock %}
 {% block content %}
-    <h1>Вы набрали: {{ mark }}
+    <h2>Вы набрали {{ mark }}
         {% if mark == 1 %}
             балл
         {% elif mark == 2 or mark == 3 or mark == 4 %}
@@ -12,7 +12,39 @@
         {% else %}
             баллов
         {% endif %}
-    из 20.
-    </h1>
+        из 20 и{% if mark > 18 %}
+            получили первый разряд.
+        {% elif mark > -1 and mark < 3 %}, к сожалению, не подтвердили первый разряд. Удачи в поиске новой работы!
+        {% else %}, к сожалению, не подтвердили первый разряд. Удачи в следующей попытке!
+        {% endif %}
+    </h2>
+    <h5>Вы неверно ответили на следующие вопросы</h5>
+    <div class="alert alert-warning mt-2" id="mainArea">
+        {% for question in wrong %}
+            <div class="alert alert-secondary mt-2" id="questionArea{{ forloop.counter0 }}">
+                <form method="post" id='testForm' data-url="{% url 'test' %}">
+                    {% csrf_token %}
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>{{ forloop.counter }}. {{ question.1 }}</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    {% if question.4 %}
+                        {% for images in img %}
+                            {% if images.picture == question.4 %}
+                                <img src="{{ images.picture.url }}" width="650" alt=""><br>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                    {% for el in question.3 %}
+                        {{ el }}<br>
+                    {% endfor %}
+                </form>
+            </div>
+        {% endfor %}
+        <a href="{% url 'logout' %}">Закончить просмотр</a>
+    </div>
 {% endblock %}
 

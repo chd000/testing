@@ -31,12 +31,17 @@
 
         img {
             box-shadow: 0 0 10px 0 #000;
+            transition: width 0.75s ease;
             margin: 10px 10px 15px 5px;
             padding: 10px;
             display: inline-flex;
             vertical-align: top;
             flex-wrap: wrap;
             align-items: center;
+        }
+
+        img:hover {
+            width: 1175px;
         }
 
         select {
@@ -71,6 +76,10 @@
             font-size: 16px;
             margin: 2px 2px;
             cursor: pointer;
+        }
+
+        .myselect[aria-selected=true] {
+            display: none;
         }
 
         label {

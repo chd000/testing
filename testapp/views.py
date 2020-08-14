@@ -4,7 +4,6 @@ from .models import Questions, ResultTable
 from django.shortcuts import redirect, render
 from .impclasses import *
 from .testing.question_chooser import *
-from django.template.response import TemplateResponse
 
 
 def registration(request):
@@ -44,26 +43,22 @@ def index(request):
 
 
 def result(request):
+    question_query = Questions.objects.all()
     user_answers_list = request.GET.getlist('list[]')
-    for i in range(len(quest.get_answers())):
-        for j in range(len(quest.get_answers()[i])):
-            if quest.get_answers()[i][j] in user_answers_list:
-                quest.get_ans_list()[i].append(quest.get_answers()[i][j])
+    fillAnsList(user_answers_list)
     counter = 0
     for k in range(20):
         if quest.get_ans_list()[k] == quest.get_answers()[k]:
             counter += 1
-    session_user = ResultTable.objects.filter(email=request.user.email)
-    if session_user.exists():
-        person = ResultTable.objects.get(email=request.user.email)
-        person.mark = counter
-        person.save()
-    else:
-        test_result = ResultTable(email=request.user.email, last_name=request.user.last_name,
-                                  first_name=request.user.first_name, mark=counter)
-        test_result.save()
+        else:
+            quest.get_wrong_answers_list().append(quest.get_questions_list()[k])
+    test_result = ResultTable(email=request.user.email, last_name=request.user.last_name,
+                              first_name=request.user.first_name, middle_name=request.user.middle_name, mark=counter)
+    test_result.save()
     context = {
-        'mark': counter
+        'mark': counter,
+        'wrong': quest.get_wrong_answers_list(),
+        'img': question_query
     }
     # response = redirect('http://127.0.0.1:8000/result')
     # return response

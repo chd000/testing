@@ -10,6 +10,8 @@ class QuestionsForTest(QuestionsInterface):
         self.question_list = self.create_variant_question_list()
         self.right_answers = self.create_right_answers()
         self.user_ans_list = self.create_ans_list()
+        self.wrong_answers_list = list()
+        self.counter = 0
 
     def create_variant_question_list(self):
         question_list = list()
@@ -48,3 +50,6 @@ class QuestionsForTest(QuestionsInterface):
 
     def get_answers(self):
         return self.right_answers
+
+    def get_wrong_answers_list(self):
+        return self.wrong_answers_list

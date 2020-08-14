@@ -29,3 +29,7 @@ class QuestionsInterface(ABC):
     @abstractmethod
     def get_answers(self):
         pass
+
+    @abstractmethod
+    def get_wrong_answers_list(self):
+        pass
