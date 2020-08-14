@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin, User
 from django.db import models
@@ -49,12 +48,20 @@ class UserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser):
+    WORKING_AT = (
+        ('GA-36', 'ГА-36'),
+        ('GAC', 'ГАЦ'),
+        ('CSU', 'ЦСЮ')
+    )
+
     email = models.EmailField(verbose_name='Адрес электронной почты', max_length=255, unique=True, )
     last_name = models.CharField('Фамилия', max_length=100)
     first_name = models.CharField('Имя', max_length=100)
-    active = models.BooleanField(default=True)
-    staff = models.BooleanField(default=False)
-    admin = models.BooleanField(default=False)
+    middle_name = models.CharField('Отчество', max_length=100)
+    working_at = models.CharField('Место работы', max_length=50, choices=WORKING_AT, blank=True)
+    active = models.BooleanField('Активный пользователь', default=True)
+    staff = models.BooleanField('Модератор', default=False)
+    admin = models.BooleanField('Админ', default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -97,6 +104,8 @@ class ResultTable(models.Model):
     email = models.EmailField(verbose_name='Адрес электронной почты', max_length=255, )
     last_name = models.CharField('Фамилия', max_length=100)
     first_name = models.CharField('Имя', max_length=100)
+    middle_name = models.CharField('Отчество', default='none', max_length=100)
+    passing_test_date = models.DateTimeField('Дата прохождения теста', auto_now_add=True, )
     mark = models.IntegerField('Баллы')
 
     def __str__(self):

@@ -12,7 +12,9 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class ResultsAdmin(admin.ModelAdmin):
-    list_display = ('email', 'last_name', 'first_name', 'mark')
+    list_display = ('last_name', 'first_name', 'middle_name', 'email', 'passing_test_date', 'mark')
+    list_filter = ('last_name', 'passing_test_date')
+    search_fields = ('email', 'last_name', 'first_name', 'middle_name')
 
 
 class UserAdmin(BaseUserAdmin):
@@ -20,23 +22,24 @@ class UserAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
 
-    list_display = ('email', 'admin', 'last_name', 'first_name')
-    list_filter = ('admin',)
+    list_display = ('last_name', 'first_name', 'middle_name', 'working_at', 'email')
+    list_filter = ('admin', 'last_name', 'working_at')
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Информация о пользователе', {'fields': ('last_name', 'first_name')}),
+        ('Информация о пользователе', {'fields': ('last_name', 'first_name', 'middle_name', 'working_at')}),
         ('Полномочия', {'fields': ('admin', )}),
     )
 
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'password1', 'password2')}
+            'fields': ('email', 'last_name', 'first_name', 'middle_name', 'working_at', 'password1', 'password2')}
          ),
     )
-    search_fields = ('last_name', 'first_name')
-    ordering = ('email',)
+
+    search_fields = ('email', 'last_name', 'first_name', 'middle_name')
+    ordering = ('last_name',)
     filter_horizontal = ()
 
 
