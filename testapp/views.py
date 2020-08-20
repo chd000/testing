@@ -39,24 +39,22 @@ def test(request):
 
 def index(request):
     quest.__init__()
+    print(quest.get_questions_list())
     return render(request, 'main/index.html', {'title': 'Главная страница сайта'})
 
 
 def result(request):
     question_query = Questions.objects.all()
     user_answers_list = request.GET.getlist('list[]')
-    fillAnsList(user_answers_list)
+    fill_ans_list(user_answers_list)
     counter = 0
-    for k in range(20):
-        if quest.get_ans_list()[k] == quest.get_answers()[k]:
-            counter += 1
-        else:
-            quest.get_wrong_answers_list().append(quest.get_questions_list()[k])
+    mark = get_mark(counter)
     test_result = ResultTable(email=request.user.email, last_name=request.user.last_name,
                               first_name=request.user.first_name, middle_name=request.user.middle_name, mark=counter)
     test_result.save()
+    print(quest.get_ans_list())
     context = {
-        'mark': counter,
+        'mark': mark,
         'wrong': quest.get_wrong_answers_list(),
         'img': question_query
     }
