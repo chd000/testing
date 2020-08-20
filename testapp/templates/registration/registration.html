@@ -6,11 +6,11 @@
 {% endblock %}
 
 {% block content %}
-<h4>Регистрация</h4>
+<h4 style="color: orange">Регистрация</h4>
 <form method="post" action="{% url 'registration' %}">
     {% csrf_token %}
 
     {{form|crispy}}
     <input name="registration" type="submit" value="Зарегестрироваться" class="btn btn-primary"/>
 </form>
-{% endblock %}>
+{% endblock %}
