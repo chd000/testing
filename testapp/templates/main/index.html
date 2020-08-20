@@ -1,23 +1,19 @@
 {% extends 'main/base.html' %}
 
 {% block title %}
-{{ title }}
+    {{ title }}
 {% endblock %}
 
-{% block content %}
 
-<h1>Главная страница</h1>
-{% if user.is_authenticated %}
-<div class="alert alert-warning mt-2">
-    <li>Вы вошли как: {{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}</li>
-    <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>
-    <li><a href="{% url 'test'%}">Пройти входной тест</a></li>
-</div>
-{% else %}
-<li>
-    <a href="{% url 'login'%}?next={{request.path}}">Войдите</a>
-    <a>Или</a>
-    <a href="{% url 'registration'%}?next={{request.path}}">Зарегестрируйтесь</a>
-</li>
-{% endif %}
+{% block content %}
+    <div class="blockreg">
+        <h1 style="color: orange">Главная страница</h1><br>
+        {% if user.is_authenticated %}
+            <button class="indbtn" onclick="location.href='{% url 'logout' %}'">Выйти</button><br><br>
+            <button class="indbtn1" onclick="location.href='{% url 'test' %}'">Пройти входной тест</button>
+        {% else %}
+                <button class="indbtn" onclick="location.href='{% url 'login' %}'">Вход</button><br><br>
+                <button class="indbtn" onclick="location.href='{% url 'registration' %}'">Регистрация</button>
+            </div>
+        {% endif %}
 {% endblock %}

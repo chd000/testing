@@ -66,19 +66,18 @@
         });
         */
 
-        $("#myselect option").each(function () {
-            console.log(this.id + ' ' + this.text + ' ' + this.value);
-        });
-
+        //$("#myselect option").each(function () {
+        //    console.log(this.id + ' ' + this.text + ' ' + this.value);
+        //});
 
         function getSequence() {
             let selectors = document.getElementsByClassName('myselect')
             let list = []
-            $("#myselect option").each(function () {
-                if ($(this).is(':selected')) {
-                  $(this).remove();
-             }
-            });
+            //$("#myselect option").each(function () {
+             //   if ($(this).is(':selected')) {
+              //    $(this).remove();
+            // }
+            //});
             for (let index = 0; index < selectors.length; index++) {
                 list.push(selectors[index].value)
             }
