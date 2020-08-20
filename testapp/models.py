@@ -1,6 +1,13 @@
+import datetime
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin, User
 from django.db import models
+
+WORKING_AT = (
+    ('GA-36', 'ГА-36'),
+    ('GAC', 'ГАЦ'),
+    ('CSU', 'ЦСЮ')
+)
 
 
 class Questions(models.Model):
@@ -48,12 +55,6 @@ class UserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser):
-    WORKING_AT = (
-        ('GA-36', 'ГА-36'),
-        ('GAC', 'ГАЦ'),
-        ('CSU', 'ЦСЮ')
-    )
-
     email = models.EmailField(verbose_name='Адрес электронной почты', max_length=255, unique=True, )
     last_name = models.CharField('Фамилия', max_length=100)
     first_name = models.CharField('Имя', max_length=100)
@@ -104,7 +105,8 @@ class ResultTable(models.Model):
     email = models.EmailField(verbose_name='Адрес электронной почты', max_length=255, )
     last_name = models.CharField('Фамилия', max_length=100)
     first_name = models.CharField('Имя', max_length=100)
-    middle_name = models.CharField('Отчество', default='none', max_length=100)
+    working_at = models.CharField('Место работы', max_length=50, choices=WORKING_AT)
+    middle_name = models.CharField('Отчество', max_length=100)
     passing_test_date = models.DateTimeField('Дата прохождения теста', auto_now_add=True, )
     mark = models.IntegerField('Баллы')
 

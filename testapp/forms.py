@@ -5,14 +5,12 @@ from django.contrib.auth.forms import UserCreationForm, ReadOnlyPasswordHashFiel
 
 
 class UserRegistrationForm(UserCreationForm, ModelForm):
-    email = forms.EmailField(required=True)
-
     class Meta:
         model = CustomUser
         fields = ['email', 'last_name', 'first_name', 'middle_name', 'working_at']
 
 
-class UserAdminCreationForm(forms.ModelForm):
+class UserAdminCreationForm(ModelForm):
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Подтвердите пароль', widget=forms.PasswordInput)
 
@@ -35,7 +33,7 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
-class UserAdminChangeForm(forms.ModelForm):
+class UserAdminChangeForm(ModelForm):
     password = ReadOnlyPasswordHashField()
 
     class Meta:
