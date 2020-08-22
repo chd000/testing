@@ -8,11 +8,13 @@ from .models import Questions, CustomUser, ResultTable
 
 
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ('quest', 'answers', 'right_answer', 'quest_type')
+    list_display = ('quest', 'answers', 'right_answer', 'answered_wrong', 'quest_type')
+    search_fields = ('quest', )
+    ordering = ('answered_wrong', )
 
 
 class ResultsAdmin(admin.ModelAdmin):
-    list_display = ('last_name', 'first_name', 'middle_name', 'email', 'working_at', 'passing_test_date', 'mark')
+    list_display = ('last_name', 'first_name', 'middle_name', 'email', 'working_at', 'passing_test_date', 'mark', 'right_ans_percent')
     list_filter = ('last_name', 'passing_test_date', 'working_at')
     search_fields = ('email', 'last_name', 'first_name', 'middle_name')
 
