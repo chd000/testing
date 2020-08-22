@@ -1,4 +1,3 @@
-import datetime
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import PermissionsMixin, User
 from django.db import models
@@ -21,6 +20,7 @@ class Questions(models.Model):
     right_answer = models.TextField('Правильные ответы', blank=True, null=True)
     picture = models.ImageField('Изображения', upload_to='', null=True, blank=True, max_length=255)
     quest_type = models.CharField('Тип вопроса', max_length=1, choices=Q_TYPE, blank=True)
+    answered_wrong = models.IntegerField('Неправильно ответили раз', default=0, blank=True, null=True)
 
     def __str__(self):
         return self.quest
@@ -108,6 +108,7 @@ class ResultTable(models.Model):
     working_at = models.CharField('Место работы', max_length=50, choices=WORKING_AT)
     middle_name = models.CharField('Отчество', max_length=100)
     passing_test_date = models.DateTimeField('Дата прохождения теста', auto_now_add=True, )
+    right_ans_percent = models.IntegerField('Процент правильных ответов', null=True, blank=True)
     mark = models.IntegerField('Баллы')
 
     def __str__(self):
