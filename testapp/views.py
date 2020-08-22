@@ -1,7 +1,7 @@
 from django.contrib import messages
 from .forms import UserRegistrationForm
 from .models import Questions, ResultTable
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, HttpResponseRedirect
 from .impclasses import *
 from .testing.question_chooser import *
 
@@ -39,25 +39,25 @@ def test(request):
 
 def index(request):
     quest.__init__()
-    print(quest.get_questions_list())
     return render(request, 'main/index.html', {'title': 'Главная страница сайта'})
 
 
 def result(request):
+    counter = 0
     question_query = Questions.objects.all()
     user_answers_list = request.GET.getlist('list[]')
     fill_ans_list(user_answers_list)
-    counter = 0
     mark = get_mark(counter)
+    percent = mark * 5
+
     test_result = ResultTable(email=request.user.email, last_name=request.user.last_name,
-                              first_name=request.user.first_name, middle_name=request.user.middle_name, mark=counter)
+                              first_name=request.user.first_name, middle_name=request.user.middle_name, mark=counter, right_ans_percent=percent)
     test_result.save()
-    print(quest.get_ans_list())
     context = {
         'mark': mark,
+        'percent': percent,
         'wrong': quest.get_wrong_answers_list(),
         'img': question_query
     }
-    # response = redirect('http://127.0.0.1:8000/result')
-    # return response
+    # return HttpResponseRedirect('http://127.0.0.1:8000/result')
     return render(request, 'main/result.html', context)
