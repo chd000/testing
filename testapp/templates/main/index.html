@@ -7,11 +7,12 @@
 
 {% block content %}
     <div class="blockreg">
-        <h1 style="color: orange">Главная страница</h1><br>
         {% if user.is_authenticated %}
-            <button class="indbtn" onclick="location.href='{% url 'logout' %}'">Выйти</button><br><br>
-            <button class="indbtn1" onclick="location.href='{% url 'test' %}'">Пройти входной тест</button>
+            <h4 style="color: orange">Здравствуйте, {{ user.last_name }} {{ user.first_name }} {{ user.middle_name }}!</h4><br>
+            <button class="indbtn1" onclick="location.href='{% url 'test' %}'">Пройти входной тест</button><br><br>
+            <button class="indbtn" onclick="location.href='{% url 'logout' %}'">Выйти</button>
         {% else %}
+            <h4 style="color: orange">Войдите или зарегестрируйтесь</h4>
                 <button class="indbtn" onclick="location.href='{% url 'login' %}'">Вход</button><br><br>
                 <button class="indbtn" onclick="location.href='{% url 'registration' %}'">Регистрация</button>
             </div>
