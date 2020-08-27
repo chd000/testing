@@ -1,18 +1,16 @@
-(function ($) {
-    $(document).on("click", "#sendAnsButton", function () {
-        $.ajax({
-            type: "GET",
-            url: 'http://127.0.0.1:8000/result',
-            data: {
-                list: resultList()
-            },
-            dataType: 'json',
-            success: function () {
-            }
-        })
-        alert('Ваши ответы отправлены, нажмите "Завершить тест"')
+function sendAnswers() {
+    $.ajax({
+        type: "GET",
+        url: 'result',
+        data: {
+            list: resultList()
+        },
+        dataType: 'json',
+        success: function () {
+        }
     })
-})(jQuery);
+    location.href = 'result'
+}
 
 /*
  $(document).ready(function () {
