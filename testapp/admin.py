@@ -14,7 +14,8 @@ class QuestionAdmin(admin.ModelAdmin):
 
 
 class ResultsAdmin(admin.ModelAdmin):
-    list_display = ('last_name', 'first_name', 'middle_name', 'email', 'working_at', 'passing_test_date', 'mark', 'right_ans_percent')
+    list_display = ('last_name', 'first_name', 'middle_name', 'email', 'working_at', 'passing_test_date', 'mark',
+                    'wrong_answers', 'right_ans_percent')
     list_filter = ('last_name', 'passing_test_date', 'working_at')
     search_fields = ('email', 'last_name', 'first_name', 'middle_name')
 
@@ -24,8 +25,8 @@ class UserAdmin(BaseUserAdmin):
     form = UserAdminChangeForm
     add_form = UserAdminCreationForm
 
-    list_display = ('last_name', 'first_name', 'middle_name', 'email', 'working_at')
-    list_filter = ('admin', 'last_name', 'working_at')
+    list_display = ('last_name', 'first_name', 'middle_name', 'email', 'working_at', 'category')
+    list_filter = ('admin', 'last_name', 'working_at', 'category')
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
