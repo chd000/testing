@@ -38,26 +38,35 @@ def test(request):
 
 
 def index(request):
-    quest.__init__()
+    create_test()
     return render(request, 'main/index.html', {'title': 'Главная страница сайта'})
 
 
 def result(request):
     counter = 0
+    wrong_ans = list()
     question_query = Questions.objects.all()
     user_answers_list = request.GET.getlist('list[]')
     fill_ans_list(user_answers_list)
-    mark = get_mark(counter)
+    mark = get_mark(counter, wrong_ans)
+    raw = get_wrong_ans_id(wrong_ans)
     percent = mark * 5
-
+    # for element in wrong_ans:
+    #    this_question = Questions.objects.get(id=element[5])
+    #    if this_question.quest in element[1]:
+    #        this_question.answered_wrong += 1
+    #        this_question.save()
+    if mark > 15:
+        request.user.category = True
     test_result = ResultTable(email=request.user.email, last_name=request.user.last_name,
-                              first_name=request.user.first_name, middle_name=request.user.middle_name, mark=counter, right_ans_percent=percent)
+                              first_name=request.user.first_name, middle_name=request.user.middle_name,
+                              working_at=request.user.working_at, mark=mark, wrong_answers=raw,
+                              right_ans_percent=percent)
     test_result.save()
     context = {
         'mark': mark,
         'percent': percent,
-        'wrong': quest.get_wrong_answers_list(),
+        'wrong': wrong_ans,
         'img': question_query
     }
-    # return HttpResponseRedirect('http://127.0.0.1:8000/result')
     return render(request, 'main/result.html', context)
