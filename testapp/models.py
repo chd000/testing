@@ -60,6 +60,7 @@ class CustomUser(AbstractBaseUser):
     first_name = models.CharField('Имя', max_length=100)
     middle_name = models.CharField('Отчество', max_length=100)
     working_at = models.CharField('Место работы', max_length=50, choices=WORKING_AT, blank=True)
+    category = models.BooleanField('Первый разряд', default=False)
     active = models.BooleanField('Активный пользователь', default=True)
     staff = models.BooleanField('Модератор', default=False)
     admin = models.BooleanField('Админ', default=False)
@@ -109,6 +110,7 @@ class ResultTable(models.Model):
     middle_name = models.CharField('Отчество', max_length=100)
     passing_test_date = models.DateTimeField('Дата прохождения теста', auto_now_add=True, )
     right_ans_percent = models.IntegerField('Процент правильных ответов', null=True, blank=True)
+    wrong_answers = models.TextField('Неправильные ответы', null=True, blank=True)
     mark = models.IntegerField('Баллы')
 
     def __str__(self):
